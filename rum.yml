@@ -17,4 +17,4 @@
       when: ansible_facts['os_family'] == "Debian"
 
     - name: Running container
-      shell: /usr/local/bin/docker run -it -d --name calc farmanahmed888/demo3
+      shell: /usr/local/bin/docker run -it -d --name calc farmanahmed888/calculator
