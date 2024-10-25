@@ -1,0 +1,20 @@
+---
+- name: Pull Docker Image
+  hosts: localhost
+  remote_user: farmanahmed888
+  become: false
+  tasks:
+    - name: Pull Docker Image
+      docker_image:
+        name: "farmanahmed888/scientific_calculator"
+        source: pull
+        tag: "latest"
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Running container
+      shell: /usr/local/bin/docker run -it -d --name scientific farmanahmed888/demos

@@ -12,7 +12,6 @@ public class DemoApplication {
 		System.out.println("Square root of "+n+" is "+Math.sqrt(n));
 	}
 	public static void dofact(Scanner sc){
-		System.out.println("Enter the number");
 		long n=sc.nextInt();
 		long fact=1;
 		for(int i=1;i<=n;i++){
