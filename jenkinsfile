@@ -1,0 +1,16 @@
+pipeline{
+    agent any
+    stages{
+        stage('Build& Test'){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        
+        stage('Create Docker Image'){
+            steps{
+              sh 'docker build -t myapp .'
+            }
+        }
+    }
+}
