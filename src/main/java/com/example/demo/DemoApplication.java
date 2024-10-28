@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Scanner;
 @SpringBootApplication
 public class DemoApplication {
-
+//test
 	public static void dosqrt(Scanner sc){
 		System.out.println("Enter the number");
 		double n=sc.nextInt();
