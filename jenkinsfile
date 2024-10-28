@@ -1,15 +1,47 @@
 pipeline{
     agent any
+    tools {
+        maven 'Maven'  
+        dockerTool 'Docker' 
+        ansible 'Ansible' 
+    }
     stages{
+        stage('Clean and Images') {
+            steps {
+                script {
+                    sh 'docker stop $(docker ps -a -q) || true'
+                    sh 'docker rm $(docker ps -a -q) || true'
+                    sh 'docker rmi $(docker images -q) || true'
+                }
+            }
+        }
         stage('Build& Test'){
             steps{
+                git branch: 'main', url: 'https://github.com/farmanahmed888/demo.git'
                 sh 'mvn clean install'
             }
         }
-        
         stage('Create Docker Image'){
             steps{
-              sh 'docker build -t myapp .'
+              sh "docker build -t farmanahmed888/calculator:latest ."
+            }
+        }
+        stage('Build from dockerhub'){
+            steps{
+                script{
+                    // This step should not normally be used in your script. Consult the inline help for details.
+                    withDockerRegistry(credentialsId: 'DockerHubCred') {
+                        // some block
+                        sh "docker push farmanahmed888/calculator:latest"
+                    }
+                }
+            }
+        }
+        stage('Ansible') {
+            steps {
+                script {
+                    sh "ansible-playbook -i inventory rum.yml"
+                }
             }
         }
     }
